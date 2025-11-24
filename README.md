@@ -27,17 +27,17 @@ Please let me know if this needs to be implemented — I will be happy to add it
 ---
 
 ## Project Structure
-src/
-components/
-context/
-hooks/
-screens/
-services/
+ - src/
+  - components/
+  - context/
+  - hooks/
+  - screens
+  - services/
 
 ## ▶️ To Run the project
-npm install
-npm run android
-npm run ios
+ - npm install
+ - npx react-native run-ios
+ - npm react-native run-android
 
 ---
 
