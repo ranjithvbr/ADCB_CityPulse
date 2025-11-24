@@ -27,12 +27,15 @@ Please let me know if this needs to be implemented — I will be happy to add it
 ---
 
 ## Project Structure
- - src/
+ - **src/**
   - components/
   - context/
   - hooks/
   - screens
   - services/
+
+## ▶️ Please find the Android installation link below:
+https://drive.google.com/file/d/1qy9nnAgQfjXMKa5cO04qYOQXPDP8CLEY/view?usp=sharing
 
 ## ▶️ To Run the project
  - npm install
