@@ -72,6 +72,7 @@ const LoginScreen = ({ navigation }: any) => {
           placeholder="Enter email"
           value={email}
           onChangeText={setEmail}
+          placeholderTextColor="#777"
         />
 
         <Text style={[styles.label, isRTL && styles.labelRTL]}>Password</Text>
@@ -83,6 +84,7 @@ const LoginScreen = ({ navigation }: any) => {
             value={password}
             secureTextEntry={!showPassword}
             onChangeText={setPassword}
+            placeholderTextColor="#777"
           />
 
           <TouchableOpacity
@@ -164,6 +166,7 @@ const styles = StyleSheet.create({
     padding: 12,
     backgroundColor: '#fff',
     marginBottom: 12,
+    color: '#000',
   },
 
   inputRTL: { textAlign: 'right' },

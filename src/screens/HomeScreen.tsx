@@ -70,6 +70,7 @@ const HomeScreen = ({ navigation }: any) => {
         placeholder="Keyword"
         value={keyword}
         onChangeText={setKeyword}
+        placeholderTextColor="#777"
       />
 
       <TextInput
@@ -77,6 +78,7 @@ const HomeScreen = ({ navigation }: any) => {
         placeholder="City"
         value={city}
         onChangeText={setCity}
+        placeholderTextColor="#777"
       />
 
       <Button title="Search" onPress={handleSearch} />

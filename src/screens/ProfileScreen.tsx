@@ -146,6 +146,7 @@ const ProfileScreen = () => {
             placeholder="Full Name"
             value={name}
             onChangeText={setName}
+            placeholderTextColor="#777"
           />
           {errors.name ? (
             <Text style={[styles.error, isRTL && styles.textRTL]}>
@@ -160,6 +161,7 @@ const ProfileScreen = () => {
             onChangeText={setEmail}
             keyboardType="email-address"
             autoCapitalize="none"
+            placeholderTextColor="#777"
           />
           {errors.email ? (
             <Text style={[styles.error, isRTL && styles.textRTL]}>
@@ -172,6 +174,7 @@ const ProfileScreen = () => {
             placeholder="City"
             value={city}
             onChangeText={setCity}
+            placeholderTextColor="#777"
           />
           {errors.city ? (
             <Text style={[styles.error, isRTL && styles.textRTL]}>

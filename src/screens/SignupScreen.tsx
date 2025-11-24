@@ -84,6 +84,7 @@ const SignupScreen = ({ navigation }: any) => {
             setEmail(v);
             if (errors.email) setErrors(p => ({ ...p, email: '' }));
           }}
+          placeholderTextColor="#777"
         />
 
         {errors.email ? <Text style={styles.error}>{errors.email}</Text> : null}
@@ -100,6 +101,7 @@ const SignupScreen = ({ navigation }: any) => {
               setPassword(v);
               if (errors.password) setErrors(p => ({ ...p, password: '' }));
             }}
+            placeholderTextColor="#777"
           />
 
           <TouchableOpacity

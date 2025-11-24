@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Platform } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import type { CityPulseEvent } from '../services/api';
 import { useFavourites } from '../hooks/useFavourites';
@@ -52,21 +52,29 @@ const EventDetailsScreen = ({ route }: any) => {
         Map Preview
       </Text>
 
-      <MapView
-        style={styles.map}
-        initialRegion={{
-          latitude: STATIC_LOCATION.latitude,
-          longitude: STATIC_LOCATION.longitude,
-          latitudeDelta: 0.2,
-          longitudeDelta: 0.2,
-        }}
-      >
-        <Marker
-          coordinate={STATIC_LOCATION}
-          title="Event Location"
-          description="Static preview location"
-        />
-      </MapView>
+      {Platform.OS === 'android' ? (
+        <View style={styles.mapPlaceholder}>
+          <Text style={styles.mapPlaceholderText}>
+            Map preview not available on Android
+          </Text>
+        </View>
+      ) : (
+        <MapView
+          style={styles.map}
+          initialRegion={{
+            latitude: STATIC_LOCATION.latitude,
+            longitude: STATIC_LOCATION.longitude,
+            latitudeDelta: 0.2,
+            longitudeDelta: 0.2,
+          }}
+        >
+          <Marker
+            coordinate={STATIC_LOCATION}
+            title="Event Location"
+            description="Static preview location"
+          />
+        </MapView>
+      )}
     </ScrollView>
   );
 };
@@ -148,6 +156,19 @@ const styles = StyleSheet.create({
     height: 220,
     borderRadius: 12,
     marginTop: 8,
+  },
+  mapPlaceholder: {
+    height: 220,
+    borderRadius: 12,
+    marginTop: 8,
+    backgroundColor: '#eee',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  mapPlaceholderText: {
+    color: '#555',
+    fontSize: 14,
   },
 });
 
