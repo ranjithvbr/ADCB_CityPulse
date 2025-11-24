@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { View, Text, Button, StyleSheet, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useLanguage } from '../hooks/useLanguage';
 import { useNavigation } from '@react-navigation/native';
 import { useAsyncStorage } from '../hooks/useAsyncStorage';
+
+import AppInput from '../components/AppInput';
 
 type Profile = {
   name: string;
@@ -23,22 +25,17 @@ const ProfileScreen = () => {
   );
 
   const [isEditing, setIsEditing] = useState(false);
-
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [city, setCity] = useState('');
 
-  const [errors, setErrors] = useState({
-    name: '',
-    email: '',
-    city: '',
-  });
+  const [errors, setErrors] = useState({ name: '', email: '', city: '' });
 
   useEffect(() => {
     if (profile) {
-      setName(profile.name || '');
-      setEmail(profile.email || '');
-      setCity(profile.city || '');
+      setName(profile.name);
+      setEmail(profile.email);
+      setCity(profile.city);
     }
   }, [profile]);
 
@@ -54,12 +51,9 @@ const ProfileScreen = () => {
     if (!email.trim()) {
       newErrors.email = 'Email is required';
       valid = false;
-    } else {
-      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!regex.test(email)) {
-        newErrors.email = 'Invalid email format';
-        valid = false;
-      }
+    } else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      newErrors.email = 'Invalid email format';
+      valid = false;
     }
 
     if (!city.trim()) {
@@ -74,9 +68,7 @@ const ProfileScreen = () => {
   const handleSave = async () => {
     if (!validate()) return;
 
-    const updated: Profile = { name, email, city };
-    await setProfile(updated);
-
+    await setProfile({ name, email, city });
     Alert.alert('Profile updated successfully');
     setIsEditing(false);
   };
@@ -85,8 +77,8 @@ const ProfileScreen = () => {
     setName(profile?.name || '');
     setEmail(profile?.email || '');
     setCity(profile?.city || '');
-    setIsEditing(false);
     setErrors({ name: '', email: '', city: '' });
+    setIsEditing(false);
   };
 
   const handleLogout = async () => {
@@ -94,147 +86,96 @@ const ProfileScreen = () => {
     navigation.reset({ index: 0, routes: [{ name: 'Login' }] });
   };
 
-  const handleToggleLanguage = async () => {
-    await AsyncStorage.setItem('lastRoute', 'Home');
-    toggleLanguage();
-  };
-
   return (
-    <View style={[styles.container, isRTL && styles.containerRTL]}>
-      <Text style={[styles.title, isRTL && styles.textRTL]}>User Profile</Text>
+    <View style={[styles.container, isRTL && styles.rtlContainer]}>
+      <Text style={[styles.title, isRTL && styles.titleRTL]}>User Profile</Text>
 
-      {/* VIEW */}
-      {!isEditing && (
-        <>
-          <Text style={[styles.label, isRTL && styles.textRTL]}>Full Name</Text>
-          <Text style={[styles.value, isRTL && styles.textRTL]}>
-            {profile?.name || '-'}
-          </Text>
+      <View style={styles.card}>
+        <AppInput
+          label="Full Name"
+          value={name}
+          onChangeText={setName}
+          editable={isEditing}
+          error={isEditing ? errors.name : ''}
+          isRTL={isRTL}
+        />
 
-          <Text style={[styles.label, isRTL && styles.textRTL]}>Email</Text>
-          <Text style={[styles.value, isRTL && styles.textRTL]}>
-            {profile?.email || '-'}
-          </Text>
+        <AppInput
+          label="Email"
+          value={email}
+          onChangeText={setEmail}
+          editable={isEditing}
+          error={isEditing ? errors.email : ''}
+          isRTL={isRTL}
+        />
 
-          <Text style={[styles.label, isRTL && styles.textRTL]}>City</Text>
-          <Text style={[styles.value, isRTL && styles.textRTL]}>
-            {profile?.city || '-'}
-          </Text>
+        <AppInput
+          label="City"
+          value={city}
+          onChangeText={setCity}
+          editable={isEditing}
+          error={isEditing ? errors.city : ''}
+          isRTL={isRTL}
+        />
 
-          <View style={styles.buttonSpacing}>
-            <Button title="Edit Profile" onPress={() => setIsEditing(true)} />
-          </View>
+        {!isEditing ? (
+          <>
+            <View style={styles.buttonSpacing}>
+              <Button title="Edit Profile" onPress={() => setIsEditing(true)} />
+            </View>
 
-          <View style={styles.buttonSpacing}>
-            <Button
-              title={isRTL ? 'Switch to English' : 'Switch to Arabic'}
-              onPress={handleToggleLanguage}
-            />
-          </View>
+            <View style={styles.buttonSpacing}>
+              <Button
+                title={isRTL ? 'Switch to English' : 'Switch to Arabic'}
+                onPress={toggleLanguage}
+              />
+            </View>
 
-          <View style={styles.buttonSpacing}>
-            <Button title="Logout" color="#d9534f" onPress={handleLogout} />
-          </View>
-        </>
-      )}
+            <View style={styles.buttonSpacing}>
+              <Button title="Logout" color="#d9534f" onPress={handleLogout} />
+            </View>
+          </>
+        ) : (
+          <>
+            <View style={styles.buttonSpacing}>
+              <Button title="Save" onPress={handleSave} />
+            </View>
 
-      {/* EDIT */}
-      {isEditing && (
-        <>
-          <TextInput
-            style={[styles.input, isRTL && styles.textRTL]}
-            placeholder="Full Name"
-            value={name}
-            onChangeText={setName}
-            placeholderTextColor="#777"
-          />
-          {errors.name ? (
-            <Text style={[styles.error, isRTL && styles.textRTL]}>
-              {errors.name}
-            </Text>
-          ) : null}
-
-          <TextInput
-            style={[styles.input, isRTL && styles.textRTL]}
-            placeholder="Email"
-            value={email}
-            onChangeText={setEmail}
-            keyboardType="email-address"
-            autoCapitalize="none"
-            placeholderTextColor="#777"
-          />
-          {errors.email ? (
-            <Text style={[styles.error, isRTL && styles.textRTL]}>
-              {errors.email}
-            </Text>
-          ) : null}
-
-          <TextInput
-            style={[styles.input, isRTL && styles.textRTL]}
-            placeholder="City"
-            value={city}
-            onChangeText={setCity}
-            placeholderTextColor="#777"
-          />
-          {errors.city ? (
-            <Text style={[styles.error, isRTL && styles.textRTL]}>
-              {errors.city}
-            </Text>
-          ) : null}
-
-          <View style={styles.row}>
-            <Button title="Save" onPress={handleSave} />
-            <View style={styles.rowGap} />
-            <Button title="Cancel" color="#888" onPress={handleCancel} />
-          </View>
-        </>
-      )}
+            <View style={styles.buttonSpacing}>
+              <Button title="Cancel" color="#6B7280" onPress={handleCancel} />
+            </View>
+          </>
+        )}
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16 },
-  containerRTL: { flexDirection: 'column', direction: 'rtl' },
+  container: { flex: 1, padding: 16, backgroundColor: '#F3F4F6' },
+  rtlContainer: { direction: 'rtl' },
 
   title: {
     fontSize: 22,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'left',
+    fontWeight: '700',
+    marginBottom: 12,
+    color: '#111827',
   },
+  titleRTL: { writingDirection: 'rtl' },
 
-  label: {
-    fontWeight: 'bold',
-    marginTop: 12,
-    textAlign: 'left',
-  },
-
-  value: {
-    fontSize: 16,
-    color: '#444',
-    marginTop: 4,
-    textAlign: 'left',
-  },
-
-  textRTL: {
-    textAlign: 'left',
-  },
-
-  input: {
+  card: {
+    backgroundColor: '#FFF',
+    padding: 16,
+    borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 6,
-    padding: 10,
-    marginTop: 10,
+    borderColor: '#E5E7EB',
   },
 
-  error: { color: 'red', fontSize: 12, marginTop: 4 },
-
-  row: { flexDirection: 'row', marginTop: 20 },
-  rowGap: { width: 10 },
-
-  buttonSpacing: { marginTop: 20 },
+  buttonSpacing: {
+    marginTop: 14,
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
 });
 
 export default ProfileScreen;

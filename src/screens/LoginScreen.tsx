@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
-  TextInput,
   StyleSheet,
   Alert,
   TouchableOpacity,
@@ -12,6 +11,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import ReactNativeBiometrics from 'react-native-biometrics';
 import { useLanguageContext } from '../context/LanguageContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AppInput from '../components/AppInput';
 
 const LoginScreen = ({ navigation }: any) => {
   const [email, setEmail] = useState('test@adcb.com');
@@ -66,41 +66,38 @@ const LoginScreen = ({ navigation }: any) => {
       <View style={styles.centerContent}>
         <Text style={styles.title}>Login</Text>
 
-        <Text style={[styles.label, isRTL && styles.labelRTL]}>Email</Text>
-        <TextInput
-          style={[styles.input, isRTL && styles.inputRTL]}
-          placeholder="Enter email"
+        <AppInput
+          label="Email"
           value={email}
           onChangeText={setEmail}
-          placeholderTextColor="#777"
+          placeholder="Enter email"
+          isRTL={isRTL}
+          keyboardType="email-address"
+          autoCapitalize="none"
+          customInputStyle={styles.authInput}
         />
 
-        <Text style={[styles.label, isRTL && styles.labelRTL]}>Password</Text>
-
-        <View style={styles.passwordWrapper}>
-          <TextInput
-            style={[styles.input, isRTL && styles.inputRTL]}
-            placeholder="Enter password"
-            value={password}
-            secureTextEntry={!showPassword}
-            onChangeText={setPassword}
-            placeholderTextColor="#777"
-          />
-
-          <TouchableOpacity
-            style={[styles.eyeIconWrapper, isRTL && styles.eyeIconWrapperRTL]}
-            onPress={() => setShowPassword(prev => !prev)}
-          >
-            <Image
-              source={
-                showPassword
-                  ? require('../assets/eye-open.png')
-                  : require('../assets/eye-closed.png')
-              }
-              style={styles.eyeIcon}
-            />
-          </TouchableOpacity>
-        </View>
+        <AppInput
+          label="Password"
+          value={password}
+          onChangeText={setPassword}
+          placeholder="Enter password"
+          isRTL={isRTL}
+          secureTextEntry={!showPassword}
+          customInputStyle={styles.authInput}
+          rightIcon={
+            <TouchableOpacity onPress={() => setShowPassword(prev => !prev)}>
+              <Image
+                source={
+                  showPassword
+                    ? require('../assets/eye-open.png')
+                    : require('../assets/eye-closed.png')
+                }
+                style={styles.eyeIcon}
+              />
+            </TouchableOpacity>
+          }
+        />
 
         <View style={styles.btnRow}>
           <TouchableOpacity style={styles.loginBtn} onPress={handleLogin}>
@@ -147,51 +144,17 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 
-  label: {
-    fontSize: 14,
-    fontWeight: '600',
-    marginBottom: 4,
-    alignSelf: 'stretch',
-    textAlign: 'left',
-  },
-
-  labelRTL: {
-    textAlign: 'left',
-  },
-
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 10,
-    padding: 12,
-    backgroundColor: '#fff',
-    marginBottom: 12,
-    color: '#000',
-  },
-
-  inputRTL: { textAlign: 'right' },
-
-  passwordWrapper: {
-    position: 'relative',
-    justifyContent: 'center',
-  },
-
-  eyeIconWrapper: {
-    position: 'absolute',
-    right: 12,
-    top: 9,
-    padding: 5,
-  },
-
-  eyeIconWrapperRTL: {
-    right: 12,
-    left: undefined,
+  authInput: {
+    paddingVertical: 14,
+    paddingHorizontal: 12,
   },
 
   eyeIcon: {
-    width: 22,
+    width: 18,
     height: 16,
     tintColor: '#555',
+    position: 'relative',
+    top: 3,
   },
 
   btnRow: {
@@ -229,7 +192,7 @@ const styles = StyleSheet.create({
 
   bioIcon: { width: 28, height: 28 },
 
-  link: { color: '#007AFF', marginTop: 20, textAlign: 'center' },
+  link: { color: '#007AFF', marginTop: 30, textAlign: 'center' },
 });
 
 export default LoginScreen;

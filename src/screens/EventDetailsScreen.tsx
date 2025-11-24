@@ -17,28 +17,29 @@ const EventDetailsScreen = ({ route }: any) => {
 
   const { isRTL } = useLanguage();
 
+  const details = [
+    { label: 'Event', value: event.Event },
+    { label: 'City', value: event.City },
+    { label: 'Created By', value: event.CreatedBy },
+    {
+      label: 'Created At',
+      value: new Date(event.createdAt).toLocaleString(),
+    },
+  ];
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.card}>
-        <Text style={[styles.label, isRTL && styles.textRTL]}>Event</Text>
-        <Text style={[styles.value, isRTL && styles.textRTL]}>
-          {event.Event}
-        </Text>
-
-        <Text style={[styles.label, isRTL && styles.textRTL]}>City</Text>
-        <Text style={[styles.value, isRTL && styles.textRTL]}>
-          {event.City}
-        </Text>
-
-        <Text style={[styles.label, isRTL && styles.textRTL]}>Created By</Text>
-        <Text style={[styles.value, isRTL && styles.textRTL]}>
-          {event.CreatedBy}
-        </Text>
-
-        <Text style={[styles.label, isRTL && styles.textRTL]}>Created At</Text>
-        <Text style={[styles.value, isRTL && styles.textRTL]}>
-          {new Date(event.createdAt).toLocaleString()}
-        </Text>
+        {details.map(item => (
+          <View key={item.label}>
+            <Text style={[styles.label, isRTL && styles.textRTL]}>
+              {item.label}
+            </Text>
+            <Text style={[styles.value, isRTL && styles.textRTL]}>
+              {item.value}
+            </Text>
+          </View>
+        ))}
 
         <Text
           style={styles.favToggle}

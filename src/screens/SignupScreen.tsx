@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
-  TextInput,
   StyleSheet,
   TouchableOpacity,
   Alert,
@@ -11,6 +10,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLanguageContext } from '../context/LanguageContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AppInput from '../components/AppInput';
 
 const SignupScreen = ({ navigation }: any) => {
   const [email, setEmail] = useState('');
@@ -23,7 +23,7 @@ const SignupScreen = ({ navigation }: any) => {
 
   const validate = () => {
     let valid = true;
-    const e: any = { email: '', password: '' };
+    const e: { email: string; password: string } = { email: '', password: '' };
 
     if (!email.trim()) {
       e.email = 'Email is required';
@@ -73,55 +73,46 @@ const SignupScreen = ({ navigation }: any) => {
       <View style={styles.centerContent}>
         <Text style={styles.title}>Sign Up</Text>
 
-        <Text style={[styles.label, isRTL && styles.labelRTL]}>Email</Text>
-
-        <TextInput
-          style={[styles.input, isRTL && styles.inputRTL]}
-          placeholder="Enter email"
+        <AppInput
+          label="Email"
           value={email}
-          autoCapitalize="none"
           onChangeText={v => {
             setEmail(v);
             if (errors.email) setErrors(p => ({ ...p, email: '' }));
           }}
-          placeholderTextColor="#777"
+          placeholder="Enter email"
+          isRTL={isRTL}
+          keyboardType="email-address"
+          autoCapitalize="none"
+          error={errors.email}
+          customInputStyle={styles.authInput}
         />
 
-        {errors.email ? <Text style={styles.error}>{errors.email}</Text> : null}
-
-        <Text style={[styles.label, isRTL && styles.labelRTL]}>Password</Text>
-
-        <View style={styles.passwordWrapper}>
-          <TextInput
-            style={[styles.input, isRTL && styles.inputRTL]}
-            placeholder="Enter password"
-            secureTextEntry={!showPassword}
-            value={password}
-            onChangeText={v => {
-              setPassword(v);
-              if (errors.password) setErrors(p => ({ ...p, password: '' }));
-            }}
-            placeholderTextColor="#777"
-          />
-
-          <TouchableOpacity
-            style={[styles.eyeIconWrapper, isRTL && styles.eyeIconWrapperRTL]}
-            onPress={() => setShowPassword(prev => !prev)}
-          >
-            <Image
-              source={
-                showPassword
-                  ? require('../assets/eye-open.png')
-                  : require('../assets/eye-closed.png')
-              }
-              style={styles.eyeIcon}
-            />
-          </TouchableOpacity>
-        </View>
-
-        {errors.password ? (
-          <Text style={styles.error}>{errors.password}</Text>
-        ) : null}
+        <AppInput
+          label="Password"
+          value={password}
+          onChangeText={v => {
+            setPassword(v);
+            if (errors.password) setErrors(p => ({ ...p, password: '' }));
+          }}
+          placeholder="Enter password"
+          isRTL={isRTL}
+          secureTextEntry={!showPassword}
+          error={errors.password}
+          customInputStyle={styles.authInput}
+          rightIcon={
+            <TouchableOpacity onPress={() => setShowPassword(prev => !prev)}>
+              <Image
+                source={
+                  showPassword
+                    ? require('../assets/eye-open.png')
+                    : require('../assets/eye-closed.png')
+                }
+                style={styles.eyeIcon}
+              />
+            </TouchableOpacity>
+          }
+        />
 
         <TouchableOpacity style={styles.signupBtn} onPress={handleSignup}>
           <Text style={styles.signupText}>Sign Up</Text>
@@ -154,6 +145,11 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
 
+  authInput: {
+    paddingVertical: 14,
+    paddingHorizontal: 12,
+  },
+
   langToggle: {
     fontSize: 14,
     color: '#007AFF',
@@ -173,49 +169,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 
-  label: {
-    fontSize: 14,
-    fontWeight: '600',
-    marginBottom: 4,
-  },
-
-  labelRTL: {
-    textAlign: 'left',
-  },
-
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 10,
-    padding: 12,
-    backgroundColor: '#fff',
-    marginBottom: 12,
-  },
-
-  inputRTL: {
-    textAlign: 'right',
-  },
-
-  passwordWrapper: {
-    position: 'relative',
-  },
-
-  eyeIconWrapper: {
-    position: 'absolute',
-    right: 12,
-    top: 9,
-    padding: 5,
-  },
-
-  eyeIconWrapperRTL: {
-    right: 12,
-    left: undefined,
-  },
-
   eyeIcon: {
-    width: 22,
+    width: 18,
     height: 16,
     tintColor: '#555',
+    position: 'relative',
+    top: 3,
   },
 
   error: {
@@ -240,7 +199,7 @@ const styles = StyleSheet.create({
 
   link: {
     color: '#007AFF',
-    marginTop: 20,
+    marginTop: 30,
     textAlign: 'center',
   },
 });

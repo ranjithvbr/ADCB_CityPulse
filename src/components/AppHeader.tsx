@@ -29,7 +29,7 @@ const AppHeader: React.FC<NativeStackHeaderProps> = ({
         {/* Back button */}
         {back ? (
           <TouchableOpacity style={styles.backBtn} onPress={handleBack}>
-            <Text style={styles.backText}>{isRTL ? '›' : '‹'}</Text>
+            <Text style={styles.backText}>{'‹'}</Text>
           </TouchableOpacity>
         ) : (
           <View style={styles.backPlaceholder} />
@@ -92,8 +92,8 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   profileImg: {
-    width: 28,
-    height: 28,
+    width: 24,
+    height: 24,
     borderRadius: 16,
   },
 });
