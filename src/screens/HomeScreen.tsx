@@ -80,6 +80,7 @@ const HomeScreen = ({ navigation }: any) => {
         </Text>
 
         <AppInput
+          // label="Keyword"
           value={keyword}
           onChangeText={setKeyword}
           placeholder="Keyword"
@@ -87,6 +88,7 @@ const HomeScreen = ({ navigation }: any) => {
         />
 
         <AppInput
+          // label="City"
           value={city}
           onChangeText={setCity}
           placeholder="City"
