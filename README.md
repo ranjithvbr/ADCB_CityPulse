@@ -1,6 +1,6 @@
-# CityPulse – Local Events Explorer
+# CityPulse – Events Explorer
 
-A React Native application for searching local events, viewing event details, managing favourites, switching languages (English/Arabic with RTL), biometric login, and local profile storage.
+A React Native application for searching events, viewing event details, managing favourites, switching languages (English/Arabic with RTL), biometric login, and local profile storage.
 
 ---
 
