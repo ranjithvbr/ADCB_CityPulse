@@ -8,7 +8,7 @@ const SplashScreen = ({ navigation }: any) => {
       const last = await AsyncStorage.getItem('lastRoute');
 
       setTimeout(() => {
-        navigation.replace(last || 'Login');
+        navigation?.replace(last || 'Login');
       }, 1000);
     };
 

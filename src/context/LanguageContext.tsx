@@ -1,5 +1,11 @@
-import React, { createContext, useContext, useEffect, useRef } from 'react';
-import { I18nManager } from 'react-native';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import { I18nManager, Platform, ActivityIndicator } from 'react-native';
 import RNRestart from 'react-native-restart';
 import { useAsyncStorage } from '../hooks/useAsyncStorage';
 
@@ -29,6 +35,8 @@ export const LanguageProvider = ({
   const isRTL = lang === 'ar';
   const hasSynced = useRef(false);
 
+  const [loadingSwitch, setLoadingSwitch] = useState(false);
+
   useEffect(() => {
     if (!loaded) return;
 
@@ -41,16 +49,28 @@ export const LanguageProvider = ({
       return;
     }
 
-    if (I18nManager.isRTL !== isRTL) {
+    if (loadingSwitch && I18nManager.isRTL !== isRTL) {
       I18nManager.allowRTL(isRTL);
       I18nManager.forceRTL(isRTL);
-      RNRestart.restart();
+
+      const restartApp = () => RNRestart.restart();
+
+      if (Platform.OS === 'android') {
+        setTimeout(restartApp, 700);
+      } else {
+        restartApp();
+      }
     }
-  }, [isRTL, loaded]);
+  }, [isRTL, loaded, loadingSwitch]);
 
   const toggleLanguage = () => {
+    setLoadingSwitch(true);
     setValue(prev => (prev === 'en' ? 'ar' : 'en'));
   };
+
+  if (loadingSwitch) {
+    return <ActivityIndicator size="large" style={{ flex: 1 }} />;
+  }
 
   if (!loaded) return null;
 

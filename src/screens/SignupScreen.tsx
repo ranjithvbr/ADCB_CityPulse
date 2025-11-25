@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -21,7 +21,7 @@ const SignupScreen = ({ navigation }: any) => {
 
   const { isRTL, toggleLanguage } = useLanguageContext();
 
-  const validate = () => {
+  const handleSignup = useCallback(() => {
     let valid = true;
     const e: { email: string; password: string } = { email: '', password: '' };
 
@@ -45,20 +45,16 @@ const SignupScreen = ({ navigation }: any) => {
     }
 
     setErrors(e);
-    return valid;
-  };
-
-  const handleSignup = () => {
-    if (!validate()) return;
+    if (!valid) return;
 
     Alert.alert('Signup successful', 'You can now login.');
     navigation.navigate('Login');
-  };
+  }, [email, password, navigation]);
 
-  const handleToggleLanguage = async () => {
+  const handleToggleLanguage = useCallback(async () => {
     await AsyncStorage.setItem('lastRoute', 'Signup');
     toggleLanguage();
-  };
+  }, [toggleLanguage]);
 
   return (
     <SafeAreaView style={styles.safeArea}>

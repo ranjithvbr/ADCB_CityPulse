@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, Button, StyleSheet, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useLanguage } from '../hooks/useLanguage';
 import { useNavigation } from '@react-navigation/native';
 import { useAsyncStorage } from '../hooks/useAsyncStorage';
-
 import AppInput from '../components/AppInput';
 
 type Profile = {
@@ -39,7 +38,7 @@ const ProfileScreen = () => {
     }
   }, [profile]);
 
-  const validate = () => {
+  const validate = useCallback(() => {
     let valid = true;
     const newErrors = { name: '', email: '', city: '' };
 
@@ -63,28 +62,33 @@ const ProfileScreen = () => {
 
     setErrors(newErrors);
     return valid;
-  };
+  }, [name, email, city]);
 
-  const handleSave = async () => {
+  const handleSave = useCallback(async () => {
     if (!validate()) return;
 
     await setProfile({ name, email, city });
     Alert.alert('Profile updated successfully');
     setIsEditing(false);
-  };
+  }, [validate, setProfile, name, email, city]);
 
-  const handleCancel = () => {
+  const handleCancel = useCallback(() => {
     setName(profile?.name || '');
     setEmail(profile?.email || '');
     setCity(profile?.city || '');
     setErrors({ name: '', email: '', city: '' });
     setIsEditing(false);
-  };
+  }, [profile]);
 
-  const handleLogout = async () => {
+  const handleLogout = useCallback(async () => {
     await AsyncStorage.multiRemove(['userProfile', 'favouriteEvents']);
     navigation.reset({ index: 0, routes: [{ name: 'Login' }] });
-  };
+  }, [navigation]);
+
+  const handleToggleLanguage = useCallback(async () => {
+    await AsyncStorage.setItem('lastRoute', 'Home');
+    toggleLanguage();
+  }, [toggleLanguage]);
 
   return (
     <View style={[styles.container, isRTL && styles.rtlContainer]}>
@@ -127,7 +131,7 @@ const ProfileScreen = () => {
             <View style={styles.buttonSpacing}>
               <Button
                 title={isRTL ? 'Switch to English' : 'Switch to Arabic'}
-                onPress={toggleLanguage}
+                onPress={handleToggleLanguage}
               />
             </View>
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, Platform } from 'react-native';
 import type { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLanguageContext } from '../context/LanguageContext';
@@ -29,7 +29,7 @@ const AppHeader: React.FC<NativeStackHeaderProps> = ({
         {/* Back button */}
         {back ? (
           <TouchableOpacity style={styles.backBtn} onPress={handleBack}>
-            <Text style={styles.backText}>{'‹'}</Text>
+            <Text style={styles.backText}>{(isRTL && Platform.OS === 'ios') ? '›' : '‹'}</Text>
           </TouchableOpacity>
         ) : (
           <View style={styles.backPlaceholder} />

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -24,44 +24,52 @@ const HomeScreen = ({ navigation }: any) => {
     search('', '');
   }, []);
 
-  const handleSearch = () => {
-    search(keyword, city);
-  };
+  const handleSearch = useCallback(() => {
+    search(keyword.trim(), city.trim());
+  }, [keyword, city, search]);
 
-  const renderItem = ({ item }: { item: CityPulseEvent }) => {
-    const fav = isFavourite(item.id);
+  const renderItem = useCallback(
+    ({ item }: { item: CityPulseEvent }) => {
+      const fav = isFavourite(item.id);
 
-    return (
-      <TouchableOpacity
-        style={styles.card}
-        onPress={() => navigation.navigate('EventDetails', { event: item })}
-      >
-        <View style={styles.cardHeader}>
-          <Text style={[styles.cardTitle, isRTL && styles.cardTitleRTL]}>
-            {item.Event.slice(0, 40)}...
-          </Text>
-
-          <TouchableOpacity onPress={() => toggleFavourite(item.id)}>
-            <Text style={[styles.favIcon, fav && styles.favIconActive]}>
-              {fav ? '★' : '☆'}
+      return (
+        <TouchableOpacity
+          style={styles.card}
+          onPress={() => navigation.navigate('EventDetails', { event: item })}
+        >
+          <View style={styles.cardHeader}>
+            <Text
+              style={[styles.cardTitle, isRTL && styles.cardTitleRTL]}
+              numberOfLines={2}
+            >
+              {item.Event.slice(0, 70)}...
             </Text>
-          </TouchableOpacity>
-        </View>
 
-        <View style={styles.cityBadgeContainer}>
-          <Text style={styles.cityBadgeText}>{item.City}</Text>
-        </View>
+            <TouchableOpacity onPress={() => toggleFavourite(item.id)}>
+              <Text style={[styles.favIcon, fav && styles.favIconActive]}>
+                {fav ? '★' : '☆'}
+              </Text>
+            </TouchableOpacity>
+          </View>
 
-        <View style={styles.cardFooter}>
-          <Text style={styles.cardCreatedBy}>By: {item.CreatedBy}</Text>
+          <View style={styles.cityBadgeContainer}>
+            <Text style={styles.cityBadgeText}>{item.City}</Text>
+          </View>
 
-          <Text style={styles.viewDetailsText}>
-            {isRTL ? `← View Details` : `View Details →`}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    );
-  };
+          <View style={styles.cardFooter}>
+            <Text style={styles.cardCreatedBy}>By: {item.CreatedBy}</Text>
+
+            <Text style={styles.viewDetailsText}>
+              {isRTL ? `← View Details` : `View Details →`}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      );
+    },
+    [isFavourite, toggleFavourite, navigation, isRTL],
+  );
+
+  const keyExtractor = useCallback((item: CityPulseEvent) => item.id, []);
 
   return (
     <View style={styles.screen}>
@@ -72,7 +80,6 @@ const HomeScreen = ({ navigation }: any) => {
         </Text>
 
         <AppInput
-          // label="Keyword"
           value={keyword}
           onChangeText={setKeyword}
           placeholder="Keyword"
@@ -80,7 +87,6 @@ const HomeScreen = ({ navigation }: any) => {
         />
 
         <AppInput
-          // label="City"
           value={city}
           onChangeText={setCity}
           placeholder="City"
@@ -115,8 +121,9 @@ const HomeScreen = ({ navigation }: any) => {
 
       <FlatList
         data={events}
-        keyExtractor={item => item.id}
+        keyExtractor={keyExtractor}
         renderItem={renderItem}
+        extraData={isRTL}
         contentContainerStyle={styles.listContent}
         ListFooterComponent={() =>
           events.length > 0 ? (
@@ -199,8 +206,8 @@ const styles = StyleSheet.create({
   },
 
   cardTitle: {
-    fontWeight: 'bold',
-    fontSize: 16,
+    fontWeight: '600',
+    fontSize: 14,
     flex: 1,
     marginRight: 8,
   },
@@ -212,7 +219,7 @@ const styles = StyleSheet.create({
     writingDirection: 'rtl',
   },
 
-  favIcon: { fontSize: 22, color: '#f5a623' },
+  favIcon: { fontSize: 22, color: '#f5a623', marginLeft: 16 },
   favIconActive: { color: '#f97316' },
 
   cityBadgeContainer: {

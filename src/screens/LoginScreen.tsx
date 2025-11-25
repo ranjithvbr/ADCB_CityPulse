@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -20,7 +20,7 @@ const LoginScreen = ({ navigation }: any) => {
 
   const { isRTL, toggleLanguage } = useLanguageContext();
 
-  const handleLogin = () => {
+  const handleLogin = useCallback(() => {
     if (!email.trim() || !password.trim()) {
       Alert.alert('Invalid credentials');
       return;
@@ -30,28 +30,34 @@ const LoginScreen = ({ navigation }: any) => {
     } else {
       Alert.alert('Invalid credentials');
     }
-  };
+  }, [email, password, navigation]);
 
-  const handleBiometric = async () => {
+  const handleBiometric = useCallback(async () => {
     try {
       const rnBiometrics = new ReactNativeBiometrics();
       const { available } = await rnBiometrics.isSensorAvailable();
-      if (!available) return Alert.alert('Biometrics not available');
+
+      if (!available) {
+        Alert.alert('Biometrics not available');
+        return;
+      }
 
       const { success } = await rnBiometrics.simplePrompt({
         promptMessage: 'Login with Biometrics',
       });
 
-      if (success) navigation.replace('Home');
-    } catch (e) {
+      if (success) {
+        navigation.replace('Home');
+      }
+    } catch {
       Alert.alert('Biometric auth failed');
     }
-  };
+  }, [navigation]);
 
-  const handleToggleLanguage = async () => {
+  const handleToggleLanguage = useCallback(async () => {
     await AsyncStorage.setItem('lastRoute', 'Login');
     toggleLanguage();
-  };
+  }, [toggleLanguage]);
 
   return (
     <SafeAreaView style={styles.safeArea}>
