@@ -81,7 +81,7 @@ const ProfileScreen = () => {
   }, [profile]);
 
   const handleLogout = useCallback(async () => {
-    await AsyncStorage.multiRemove(['userProfile', 'favouriteEvents']);
+    await AsyncStorage.multiRemove(['userProfile', 'favouriteEvents', 'lastRoute']);
     navigation.reset({ index: 0, routes: [{ name: 'Login' }] });
   }, [navigation]);
 

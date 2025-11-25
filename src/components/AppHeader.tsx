@@ -92,8 +92,8 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   profileImg: {
-    width: 24,
-    height: 24,
+    width: 20,
+    height: 20,
     borderRadius: 16,
   },
 });

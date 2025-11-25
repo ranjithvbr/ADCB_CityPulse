@@ -135,6 +135,6 @@ const styles = StyleSheet.create({
     color: '#DC2626',
   },
   rtlError: {
-    textAlign: 'right',
+    writingDirection: 'rtl',
   },
 });

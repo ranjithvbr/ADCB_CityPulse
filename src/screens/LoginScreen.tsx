@@ -7,24 +7,43 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import ReactNativeBiometrics from 'react-native-biometrics';
 import { useLanguageContext } from '../context/LanguageContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppInput from '../components/AppInput';
+import AuthLayout from '../components/AuthLayout';
 
 const LoginScreen = ({ navigation }: any) => {
   const [email, setEmail] = useState('test@adcb.com');
   const [password, setPassword] = useState('testuser');
   const [showPassword, setShowPassword] = useState(false);
 
-  const { isRTL, toggleLanguage } = useLanguageContext();
+  const [errors, setErrors] = useState({ email: '', password: '' });
+
+  const { isRTL } = useLanguageContext();
 
   const handleLogin = useCallback(() => {
-    if (!email.trim() || !password.trim()) {
-      Alert.alert('Invalid credentials');
-      return;
+    let valid = true;
+    const e: { email: string; password: string } = { email: '', password: '' };
+
+    if (!email.trim()) {
+      e.email = 'Email is required';
+      valid = false;
+    } else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        e.email = 'Please enter a valid email';
+        valid = false;
+      }
     }
+
+    if (!password.trim()) {
+      e.password = 'Password is required';
+      valid = false;
+    }
+
+    setErrors(e);
+    if (!valid) return;
+
     if (email === 'test@adcb.com' && password === 'testuser') {
       navigation.replace('Home');
     } else {
@@ -54,102 +73,70 @@ const LoginScreen = ({ navigation }: any) => {
     }
   }, [navigation]);
 
-  const handleToggleLanguage = useCallback(async () => {
-    await AsyncStorage.setItem('lastRoute', 'Login');
-    toggleLanguage();
-  }, [toggleLanguage]);
-
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <View style={styles.header}>
-        <Text style={styles.appName}>ADCB CityPulse</Text>
+    <AuthLayout title="Login" lastRouteKey="Login">
+      <AppInput
+        label="Email"
+        value={email}
+        onChangeText={v => {
+          setEmail(v);
+          if (errors.email) setErrors(prev => ({ ...prev, email: '' }));
+        }}
+        placeholder="Enter email"
+        isRTL={isRTL}
+        keyboardType="email-address"
+        autoCapitalize="none"
+        error={errors.email}
+        customInputStyle={styles.authInput}
+      />
 
-        <TouchableOpacity onPress={handleToggleLanguage}>
-          <Text style={styles.langToggle}>{isRTL ? 'English' : 'Arabic'}</Text>
+      <AppInput
+        label="Password"
+        value={password}
+        onChangeText={v => {
+          setPassword(v);
+          if (errors.password) setErrors(prev => ({ ...prev, password: '' }));
+        }}
+        placeholder="Enter password"
+        isRTL={isRTL}
+        secureTextEntry={!showPassword}
+        error={errors.password}
+        customInputStyle={styles.authInput}
+        rightIcon={
+          <TouchableOpacity onPress={() => setShowPassword(prev => !prev)}>
+            <Image
+              source={
+                showPassword
+                  ? require('../assets/eye-open.png')
+                  : require('../assets/eye-closed.png')
+              }
+              style={styles.eyeIcon}
+            />
+          </TouchableOpacity>
+        }
+      />
+
+      <View style={styles.btnRow}>
+        <TouchableOpacity style={styles.loginBtn} onPress={handleLogin}>
+          <Text style={styles.loginText}>Login</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.bioBtn} onPress={handleBiometric}>
+          <Image
+            source={require('../assets/biometric.png')}
+            style={styles.bioIcon}
+          />
         </TouchableOpacity>
       </View>
 
-      <View style={styles.centerContent}>
-        <Text style={styles.title}>Login</Text>
-
-        <AppInput
-          label="Email"
-          value={email}
-          onChangeText={setEmail}
-          placeholder="Enter email"
-          isRTL={isRTL}
-          keyboardType="email-address"
-          autoCapitalize="none"
-          customInputStyle={styles.authInput}
-        />
-
-        <AppInput
-          label="Password"
-          value={password}
-          onChangeText={setPassword}
-          placeholder="Enter password"
-          isRTL={isRTL}
-          secureTextEntry={!showPassword}
-          customInputStyle={styles.authInput}
-          rightIcon={
-            <TouchableOpacity onPress={() => setShowPassword(prev => !prev)}>
-              <Image
-                source={
-                  showPassword
-                    ? require('../assets/eye-open.png')
-                    : require('../assets/eye-closed.png')
-                }
-                style={styles.eyeIcon}
-              />
-            </TouchableOpacity>
-          }
-        />
-
-        <View style={styles.btnRow}>
-          <TouchableOpacity style={styles.loginBtn} onPress={handleLogin}>
-            <Text style={styles.loginText}>Login</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.bioBtn} onPress={handleBiometric}>
-            <Image
-              source={require('../assets/biometric.png')}
-              style={styles.bioIcon}
-            />
-          </TouchableOpacity>
-        </View>
-
-        <Text style={styles.link} onPress={() => navigation.navigate('Signup')}>
-          Don't have an account? Sign Up
-        </Text>
-      </View>
-    </SafeAreaView>
+      <Text style={styles.link} onPress={() => navigation.navigate('Signup')}>
+        Don't have an account? Sign Up
+      </Text>
+    </AuthLayout>
   );
 };
 
 const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: '#F7F7F7' },
-
-  header: {
-    paddingHorizontal: 20,
-    paddingTop: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-
-  appName: { fontSize: 22, fontWeight: '700' },
-
-  langToggle: { fontSize: 14, color: '#007AFF', fontWeight: '700' },
-
-  centerContent: { flex: 1, justifyContent: 'center', paddingHorizontal: 20 },
-
-  title: {
-    fontSize: 26,
-    fontWeight: '700',
-    marginBottom: 24,
-    textAlign: 'center',
-  },
-
   authInput: {
     paddingVertical: 14,
     paddingHorizontal: 12,
