@@ -60,8 +60,8 @@ Screenshot From IOS (English)
 
 Screenshot From Android (Arabic)
 ---
-<img width="300" height="900" alt="Simulator Screenshot - Android - 2025-11-24 at 11 49 40" src="https://github.com/user-attachments/assets/b9715cac-22a8-4f35-885e-3adcc4a8b91a" />
-<img width="300" height="900" alt="Simulator Screenshot - Android - 2025-11-24 at 11 49 40" src="https://github.com/user-attachments/assets/27c88e60-610b-4c4d-9a6a-e6cb889dc5b3" />
+<img width="300" height="900" alt="Simulator Screenshot - Android - 2025-11-24 at 11 49 40" src="https://github.com/user-attachments/assets/5912ed4a-1124-465b-b208-e7c9a8b29d08" />
+<img width="300" height="900" alt="Simulator Screenshot - Android - 2025-11-24 at 11 49 40" src="https://github.com/user-attachments/assets/8bb65e03-d370-4e17-a0df-80e54c91d0b3" />
 <img width="300" height="900" alt="Simulator Screenshot - Android - 2025-11-24 at 11 49 40" src="https://github.com/user-attachments/assets/c04ca1ec-1aee-4077-9a45-96320f00c50b" />
 
 <img width="300" height="900" alt="Simulator Screenshot - Android - 2025-11-24 at 11 49 40" src="https://github.com/user-attachments/assets/bbe92529-7baf-4ba1-ae93-e96543f693e2" />
