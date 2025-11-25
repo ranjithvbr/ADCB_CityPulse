@@ -34,7 +34,7 @@ Please let me know if this needs to be implemented — I will be happy to add it
   - services/
 
 ## ▶️ Please find the Android installation link below:
-https://drive.google.com/file/d/1qzpW_dMsDIipac9Vf8gdlO00awuEwGzG/view?usp=sharing
+https://drive.google.com/file/d/1Ei7Xgbh10JfvtyKIbYVTyNILPNPpwc6Z/view?usp=sharing
 
 ## ▶️ To Run the project
  - npm install
@@ -49,8 +49,8 @@ https://drive.google.com/file/d/1qzpW_dMsDIipac9Vf8gdlO00awuEwGzG/view?usp=shari
 Screenshot From IOS (English)
 ---
 <img width="300" height="900" alt="Simulator Screenshot - iPhone 16 Pro - 2025-11-25 at 07 35 33" src="https://github.com/user-attachments/assets/69f3b021-aa69-4875-8824-d192de64d3e3" />
-<img width="300" height="900" alt="Simulator Screenshot - iPhone 16 Pro - 2025-11-25 at 07 35 52" src="https://github.com/user-attachments/assets/c2d7858a-f44d-44c6-ac5b-a779eada2299" />
-<img width="300" height="900" alt="Simulator Screenshot - iPhone 16 Pro - 2025-11-25 at 07 36 08" src="https://github.com/user-attachments/assets/e0c33dd9-4180-421d-bc35-ecdb60624a0c" />
+<img width="300" height="900" alt="Simulator Screenshot - iPhone 16 Pro - 2025-11-25 at 09 16 20" src="https://github.com/user-attachments/assets/b0f6689e-7f3a-443a-816b-80e49445e25e" />
+<img width="300" height="900" alt="Simulator Screenshot - iPhone 16 Pro - 2025-11-25 at 09 16 30" src="https://github.com/user-attachments/assets/2f969415-931c-40da-a4f9-579e515cd587" />
 
 <img width="300" height="900" alt="Simulator Screenshot - iPhone 16 Pro - 2025-11-25 at 07 37 16" src="https://github.com/user-attachments/assets/fa85cb81-8297-4ede-8282-cf6f84283942" />
 <img width="300" height="900" alt="Simulator Screenshot - iPhone 16 Pro - 2025-11-25 at 07 37 35" src="https://github.com/user-attachments/assets/17eb7b31-0d19-40d6-80bd-f0480d022ae6" />
