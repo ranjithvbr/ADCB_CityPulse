@@ -1,6 +1,6 @@
-# CityPulse – Local Events Explorer
+# CityPulse – Events Explorer
 
-A React Native application for searching local events, viewing event details, managing favourites, switching languages (English/Arabic with RTL), biometric login, and local profile storage.
+A React Native application for searching events, viewing event details, managing favourites, switching languages (English/Arabic with RTL), biometric login, and local profile storage.
 
 ---
 
@@ -17,17 +17,16 @@ A React Native application for searching local events, viewing event details, ma
 
 ### Bonus Features Implemented
 - **Map preview** (React Native Maps)  
-- **Biometric Login** (Face/Touch ID)  
+- **Biometric Login** 
 - **Login & Signup** using mock authentication  
 
-### Bonus Not Implemented
-Firebase (optional as per instructions)  
+Firebase not implemented (optional as per instructions)  
 Please let me know if this needs to be implemented — I will be happy to add it as well.
 
 ---
 
 ## Project Structure
- - **src/**
+ - _**src/**_
   - components/
   - context/
   - hooks/
@@ -35,7 +34,7 @@ Please let me know if this needs to be implemented — I will be happy to add it
   - services/
 
 ## ▶️ Please find the Android installation link below:
-https://drive.google.com/file/d/1qy9nnAgQfjXMKa5cO04qYOQXPDP8CLEY/view?usp=sharing
+https://drive.google.com/file/d/1qzpW_dMsDIipac9Vf8gdlO00awuEwGzG/view?usp=sharing
 
 ## ▶️ To Run the project
  - npm install
@@ -45,31 +44,26 @@ https://drive.google.com/file/d/1qy9nnAgQfjXMKa5cO04qYOQXPDP8CLEY/view?usp=shari
 ---
 
 ## 📝 Assumptions
-- Authentication uses mock credentials
-- Event API uses a simple public dataset (not Ticketmaster)
-- Firebase not added (optional bonus)
+- Clear the stored user profile data on logout
 
-Screenshot From IOS
+Screenshot From IOS (English)
 ---
+<img width="300" height="900" alt="Simulator Screenshot - iPhone 16 Pro - 2025-11-25 at 07 35 33" src="https://github.com/user-attachments/assets/69f3b021-aa69-4875-8824-d192de64d3e3" />
+<img width="300" height="900" alt="Simulator Screenshot - iPhone 16 Pro - 2025-11-25 at 07 35 52" src="https://github.com/user-attachments/assets/c2d7858a-f44d-44c6-ac5b-a779eada2299" />
+<img width="300" height="900" alt="Simulator Screenshot - iPhone 16 Pro - 2025-11-25 at 07 36 08" src="https://github.com/user-attachments/assets/e0c33dd9-4180-421d-bc35-ecdb60624a0c" />
 
-<img width="400" height="1200" alt="Simulator Screenshot - iPhone 16 Pro - 2025-11-24 at 11 49 00" src="https://github.com/user-attachments/assets/a0c04529-1d81-429a-84cf-be1bcaea9598" />
-<img width="400" height="1200" alt="Simulator Screenshot - iPhone 16 Pro - 2025-11-24 at 11 49 08" src="https://github.com/user-attachments/assets/2ee637aa-06c3-46d2-847a-fcd4b40d076e" />
-
-<img width="400" height="1200" alt="Simulator Screenshot - iPhone 16 Pro - 2025-11-24 at 11 49 20" src="https://github.com/user-attachments/assets/2ff81469-15d4-4f8f-801a-0740e47bd174" />
-<img width="400" height="1200" alt="Simulator Screenshot - iPhone 16 Pro - 2025-11-24 at 11 49 27" src="https://github.com/user-attachments/assets/198a956a-be69-4d31-9d7c-2306d08d97f8" />
-
-<img width="400" height="1200" alt="Simulator Screenshot - iPhone 16 Pro - 2025-11-24 at 11 49 40" src="https://github.com/user-attachments/assets/0b494044-198f-407c-9aec-6bef1e063a09" />
+<img width="300" height="900" alt="Simulator Screenshot - iPhone 16 Pro - 2025-11-25 at 07 37 16" src="https://github.com/user-attachments/assets/fa85cb81-8297-4ede-8282-cf6f84283942" />
+<img width="300" height="900" alt="Simulator Screenshot - iPhone 16 Pro - 2025-11-25 at 07 37 35" src="https://github.com/user-attachments/assets/17eb7b31-0d19-40d6-80bd-f0480d022ae6" />
+<img width="300" height="900" alt="Simulator Screenshot - iPhone 16 Pro - 2025-11-25 at 07 39 21" src="https://github.com/user-attachments/assets/d8b804d8-c556-42cb-8422-25bab391c0de" />
 
 ---
 
-Screenshot From Android
+Screenshot From Android (Arabic)
 ---
+<img width="300" height="900" alt="Simulator Screenshot - Android - 2025-11-24 at 11 49 40" src="https://github.com/user-attachments/assets/b9715cac-22a8-4f35-885e-3adcc4a8b91a" />
+<img width="300" height="900" alt="Simulator Screenshot - Android - 2025-11-24 at 11 49 40" src="https://github.com/user-attachments/assets/27c88e60-610b-4c4d-9a6a-e6cb889dc5b3" />
+<img width="300" height="900" alt="Simulator Screenshot - Android - 2025-11-24 at 11 49 40" src="https://github.com/user-attachments/assets/c04ca1ec-1aee-4077-9a45-96320f00c50b" />
 
-<img width="400" height="1200" alt="Simulator Screenshot - iPhone 16 Pro - 2025-11-24 at 11 49 40" src="https://github.com/user-attachments/assets/b3ea2114-e396-48c9-b369-a8e3ef98d53c" />
-<img width="400" height="1200" alt="Simulator Screenshot - iPhone 16 Pro - 2025-11-24 at 11 49 40" src="https://github.com/user-attachments/assets/004bd493-b193-4ec3-814f-bc0f6ac427e5" />
-
-<img width="400" height="1200" alt="Simulator Screenshot - iPhone 16 Pro - 2025-11-24 at 11 49 40" src="https://github.com/user-attachments/assets/870437d6-8efa-42d9-8214-b80451f0ee75" />
-<img width="400" height="1200" alt="Simulator Screenshot - iPhone 16 Pro - 2025-11-24 at 11 49 40" src="https://github.com/user-attachments/assets/1ae3aa74-6476-4c9f-acb0-114088402c74" />
-
-<img width="400" height="1200" alt="Simulator Screenshot - iPhone 16 Pro - 2025-11-24 at 11 49 40" src="https://github.com/user-attachments/assets/a52e576c-6f17-4354-8d06-2322fb29268d" />
+<img width="300" height="900" alt="Simulator Screenshot - Android - 2025-11-24 at 11 49 40" src="https://github.com/user-attachments/assets/bbe92529-7baf-4ba1-ae93-e96543f693e2" />
+<img width="300" height="900" alt="Simulator Screenshot - Android - 2025-11-24 at 11 49 40" src="https://github.com/user-attachments/assets/9d9a54ae-29aa-43d1-9497-71e90454c445" />
 
