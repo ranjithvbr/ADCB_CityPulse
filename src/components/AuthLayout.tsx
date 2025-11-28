@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useLanguageContext } from '../context/LanguageContext';
+import { useLanguage } from '../hooks/useLanguage';
 
 type AuthLayoutProps = {
   title: string;
@@ -17,7 +17,7 @@ type AuthLayoutProps = {
 };
 
 const AuthLayout = ({ title, lastRouteKey, children }: AuthLayoutProps) => {
-  const { isRTL, toggleLanguage } = useLanguageContext();
+  const { isRTL, toggleLanguage } = useLanguage();
 
   const handleToggleLanguage = useCallback(async () => {
     await AsyncStorage.setItem('lastRoute', lastRouteKey);

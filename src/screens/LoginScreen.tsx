@@ -8,9 +8,9 @@ import {
   Image,
 } from 'react-native';
 import ReactNativeBiometrics from 'react-native-biometrics';
-import { useLanguageContext } from '../context/LanguageContext';
 import AppInput from '../components/AppInput';
 import AuthLayout from '../components/AuthLayout';
+import { useLanguage } from '../hooks/useLanguage';
 
 const LoginScreen = ({ navigation }: any) => {
   const [email, setEmail] = useState('test@adcb.com');
@@ -19,7 +19,7 @@ const LoginScreen = ({ navigation }: any) => {
 
   const [errors, setErrors] = useState({ email: '', password: '' });
 
-  const { isRTL } = useLanguageContext();
+  const { isRTL } = useLanguage();
 
   const handleLogin = useCallback(() => {
     let valid = true;

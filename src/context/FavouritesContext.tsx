@@ -2,10 +2,10 @@ import React, { createContext, useContext } from 'react';
 import { useAsyncStorage } from '../hooks/useAsyncStorage';
 
 type FavouritesContextValue = {
-  favourites: string[];
+  // favourites: string[];
   isFavourite: (id: string) => boolean;
   toggleFavourite: (id: string) => void;
-  loaded: boolean;
+  // loaded: boolean;
 };
 
 const FavouritesContext = createContext<FavouritesContextValue | undefined>(
@@ -34,7 +34,7 @@ export const FavouritesProvider = ({
 
   return (
     <FavouritesContext.Provider
-      value={{ favourites, isFavourite, toggleFavourite, loaded }}
+      value={{ isFavourite, toggleFavourite }}
     >
       {children}
     </FavouritesContext.Provider>

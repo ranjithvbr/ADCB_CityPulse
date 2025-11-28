@@ -6,9 +6,9 @@ import {
   Alert,
   Image,
 } from 'react-native';
-import { useLanguageContext } from '../context/LanguageContext';
 import AppInput from '../components/AppInput';
 import AuthLayout from '../components/AuthLayout';
+import { useLanguage } from '../hooks/useLanguage';
 
 const SignupScreen = ({ navigation }: any) => {
   const [email, setEmail] = useState('');
@@ -17,7 +17,7 @@ const SignupScreen = ({ navigation }: any) => {
 
   const [errors, setErrors] = useState({ email: '', password: '' });
 
-  const { isRTL } = useLanguageContext();
+  const { isRTL } = useLanguage();
 
   const handleSignup = useCallback(() => {
     let valid = true;

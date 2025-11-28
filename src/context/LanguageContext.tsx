@@ -12,7 +12,7 @@ import { useAsyncStorage } from '../hooks/useAsyncStorage';
 type Lang = 'en' | 'ar';
 
 type LanguageContextValue = {
-  lang: Lang;
+  // lang: Lang;
   isRTL: boolean;
   toggleLanguage: () => void;
 };
@@ -75,7 +75,7 @@ export const LanguageProvider = ({
   if (!loaded) return null;
 
   return (
-    <LanguageContext.Provider value={{ lang, isRTL, toggleLanguage }}>
+    <LanguageContext.Provider value={{ isRTL, toggleLanguage }}>
       {children}
     </LanguageContext.Provider>
   );

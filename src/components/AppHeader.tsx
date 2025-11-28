@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, Platform } from 'react-native';
 import type { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useLanguageContext } from '../context/LanguageContext';
+import { useLanguage } from '../hooks/useLanguage';
 
 const AppHeader: React.FC<NativeStackHeaderProps> = ({
   navigation,
@@ -10,7 +10,7 @@ const AppHeader: React.FC<NativeStackHeaderProps> = ({
   options,
   back,
 }) => {
-  const { isRTL } = useLanguageContext();
+  const { isRTL } = useLanguage();
   const title = options.title ?? route.name;
 
   const handleBack = () => {
